@@ -1,0 +1,23 @@
+.dashboard-header {
+    background: linear-gradient(90deg, #234055 60%, #29597d 100%);
+    color: #fff;
+    padding: 24px 40px 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+  
+  .dashboard-page {
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
