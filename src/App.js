@@ -17,7 +17,7 @@ const initialReadings = [
 ];
 
 const initialBilling = initialReadings.slice(1).map((r, idx) => ({
-  name: '', // To be filled after login
+  name: '', 
   date: r.date,
   amount: (r.reading - initialReadings[idx].reading) * M3_PRICE,
   status: 'Paid',
@@ -29,9 +29,9 @@ const App = () => {
   const [readings, setReadings] = useState(initialReadings);
   const [billingTable, setBillingTable] = useState(initialBilling);
 
-  // Always call hooks at the top level, not conditionally!
+  
   useEffect(() => {
-    // Fill in billingTable 'name' after user logs in, only once
+    // Add user name to billing table
     if (user && billingTable.length && !billingTable[0].name) {
       setBillingTable(billingTable.map(row => ({ ...row, name: user })));
     }
@@ -43,30 +43,30 @@ const App = () => {
     return <LoginForm onLogin={setUser} />;
   }
 
-  // Calculate total consumption and billing
+  // Calculate's the total consumption and billing
   const totalConsumption =
     readings.length > 1
       ? readings[readings.length - 1].reading - readings[0].reading
       : 0;
   const amountBilled = totalConsumption * M3_PRICE;
 
-  // Prepare data for the water usage chart
+  // Prepare's  data for the water usage chart
   const usageData = readings.slice(1).map((r, idx) => ({
     month: new Date(r.date).toLocaleString('default', { month: 'short' }),
     value: r.reading - readings[idx].reading,
   }));
 
-  // Count paid/unpaid invoices for charts/summary
+  // Count's paid/unpaid invoices for charts/summary
   const paidCount = billingTable.filter(row => row.status === 'Paid').length;
   const unpaidCount = billingTable.filter(row => row.status === 'Unpaid').length;
 
-  // Handle new reading input, now accepts status & payment method
+  // Handle's new reading input, now accepts status & payment method
   const handleNewReading = (reading, date, status, paymentMethod) => {
     setReadings(prev => [
       ...prev,
       { date, reading }
     ]);
-    // Calculate amount and add a billing row
+    // Calculate's  amount and add a billing row
     const prevReading = readings[readings.length - 1];
     const amount = (reading - prevReading.reading) * M3_PRICE;
     setBillingTable(prev => [
