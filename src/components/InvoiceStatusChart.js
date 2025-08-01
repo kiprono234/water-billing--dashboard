@@ -3,8 +3,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import './InvoiceStatusChart.scss';
 
 const data = [
-  { name: 'Paid', value: 78 },
-  { name: 'Unpaid', value: 22 },
+  { name: 'Paid', value: 0},
+  { name: 'Unpaid', value: 0},
 ];
 
 const COLORS = ['#3f8efc', '#f6a623'];
@@ -32,14 +32,14 @@ const InvoiceStatusChart = () => (
       </PieChart>
     </ResponsiveContainer>
     <div className="invoice-status-center">
-      <span>78%</span>
+      <span></span>
     </div>
     <div className="invoice-status-legend">
       <div>
-        <span className="dot paid" /> Paid <span className="number">78%</span>
+        <span className="dot paid" /> Paid <span className="number">%</span>
       </div>
       <div>
-        <span className="dot unpaid" /> Unpaid <span className="number">22%</span>
+        <span className="dot unpaid" /> Unpaid <span className="number">%</span>
       </div>
     </div>
   </div>

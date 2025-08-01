@@ -1,12 +1,12 @@
 import React from 'react';
 
 const dummyReadings = {
-  'john': [
+  'Kevin': [
     { date: '2025-07-01', reading: 10 },
     { date: '2025-06-01', reading: 7 },
     { date: '2025-05-01', reading: 2 },
   ],
-  'mary': [
+  'Mary': [
     { date: '2025-07-01', reading: 5 },
     { date: '2025-06-01', reading: 2 },
   ],

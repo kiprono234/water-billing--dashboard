@@ -12,6 +12,7 @@ const CustomerBillingTable = ({ rows }) => (
           <th>Amount Billed</th>
           <th>Status</th>
           <th>Payment Method</th>
+          <th>Month</th>
         </tr>
       </thead>
       <tbody>

@@ -7,7 +7,7 @@ const LoginForm = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Replace this with real authentication logic!
+    
     if (username && password) {
       onLogin(username);
     }
@@ -20,7 +20,7 @@ const LoginForm = ({ onLogin }) => {
         <label>
           Username
           <input 
-            type="text"
+            type="text and email, number password autocorrect autofill autoComplete"
             value={username}
             onChange={e => setUsername(e.target.value)}
             required
@@ -29,7 +29,7 @@ const LoginForm = ({ onLogin }) => {
         <label>
           Password
           <input 
-            type="password"
+            type="password autocorrect autofill autoComplete off readonly disabled autofocus autofocus"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
