@@ -1,0 +1,54 @@
+.customer-billing-table-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px #0002;
+    padding: 18px 24px 18px 24px;
+    margin: 24px 40px 0 40px;
+    min-width: 680px;
+  
+    .customer-billing-title {
+      font-weight: bold;
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+      color: #2b4865;
+    }
+  
+    .customer-billing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+  
+      th, td {
+        padding: 12px 8px;
+        text-align: left;
+      }
+      th {
+        color: #999;
+        font-weight: 600;
+        background: #f8f9fc;
+      }
+      tr {
+        border-bottom: 1px solid #eee;
+      }
+      td {
+        background: #fff;
+      }
+      .status-badge {
+        padding: 4px 18px;
+        border-radius: 20px;
+        font-size: 0.98rem;
+        font-weight: 500;
+        color: #fff;
+        &.paid {
+          background: #d6f5e7;
+          color: #21a366;
+          border: 1px solid #21a366;
+        }
+        &.unpaid {
+          background: #fff0e3;
+          color: #f6a623;
+          border: 1px solid #f6a623;
+        }
+      }
+    }
+  }

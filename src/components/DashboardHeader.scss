@@ -1,0 +1,20 @@
+.dashboard-header {
+    background: #2b4865;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 32px 18px 40px;
+    border-radius: 12px 12px 0 0;
+  
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+  
+    .dashboard-page {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+  }

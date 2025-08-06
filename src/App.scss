@@ -1,0 +1,15 @@
+.dashboard-container {
+  background: #f8f9fc;
+  min-height: 100vh;
+  border-radius: 14px;
+  margin: 0;
+  padding: 0 0 40px 0;
+}
+.charts-row {
+  display: flex;
+  gap: 28px;
+  margin: 0 40px 20px 40px;
+}
+.table-row {
+  margin: 28px 40px 0 40px;
+}
