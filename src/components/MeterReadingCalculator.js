@@ -12,22 +12,30 @@ const MeterReadingCalculator = ({ onAddMeterReading, user, onLogin, onLogout }) 
   const [payNow, setPayNow] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loginName, setLoginName] = useState('');
+  const [readingDate, setReadingDate] = useState(() => {
+    const d = new Date();
+    return d.toISOString().slice(0, 10); // yyyy-mm-dd
+  });
 
   const total = reading ? parseFloat(reading) * RATE_PER_M3 : 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (onAddMeterReading && month && reading) {
+    if (onAddMeterReading && month && reading && readingDate) {
+      const dateObj = new Date(readingDate);
       onAddMeterReading({
         month,
         reading,
         amount: total,
         payNow,
+        date: readingDate,
+        year: dateObj.getFullYear()
       });
       setSubmitted(true);
       setMonth('');
       setReading('');
       setPayNow(false);
+      setReadingDate(new Date().toISOString().slice(0,10));
       setTimeout(() => setSubmitted(false), 2000); // Reset submission after 2s
     }
   };
@@ -85,6 +93,16 @@ const MeterReadingCalculator = ({ onAddMeterReading, user, onLogin, onLogout }) 
           </select>
         </div>
         <div className="input-group">
+          <label htmlFor="readingDate">Reading Date:</label>
+          <input
+            type="date"
+            id="readingDate"
+            value={readingDate}
+            onChange={e => setReadingDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-group">
           <label htmlFor="meterReading">Meter Reading (m³):</label>
           <input
             type="number"
@@ -92,7 +110,7 @@ const MeterReadingCalculator = ({ onAddMeterReading, user, onLogin, onLogout }) 
             value={reading}
             onChange={e => setReading(e.target.value.replace(/[^\d.]/g, ''))}
             min="0"
-            placeholder="Enter meter reading"
+            placeholder="Enter your meter reading"
             required
           />
         </div>
@@ -119,7 +137,7 @@ const MeterReadingCalculator = ({ onAddMeterReading, user, onLogin, onLogout }) 
         <button 
           type="submit" 
           className="pay-btn" 
-          disabled={!month || !reading || submitted}
+          disabled={!month || !reading || !readingDate || submitted}
         >
           {submitted ? 'Submitted!' : 'Confirm'}
         </button>

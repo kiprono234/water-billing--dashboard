@@ -4,25 +4,25 @@ import './SummaryCards.scss';
 const SummaryCards = ({ totalConsumption, amountBilled, customers, unpaidInvoices }) => {
   const cards = [
     {
-      icon: '💧',
+      icon: '💧💧 💧',
       aria: 'water',
       label: 'Total Consumption',
       value: `${totalConsumption.toLocaleString()} m³`
     },
     {
-      icon: '💲',
+      icon: '💴 💴 💴',
       aria: 'money',
       label: 'Amount Billed',
       value: `KSh ${amountBilled.toLocaleString()}`
     },
     {
-      icon: '👥',
+      icon: '🧑‍💼 🧑‍💼 🧑‍🔧 🧑‍🤝‍🧑 ',
       aria: 'customers',
       label: 'Customers',
       value: customers.toLocaleString()
     },
     {
-      icon: '⚠️',
+      icon: '🔔 🔔 🔔',
       aria: 'warning',
       label: 'Unpaid Invoices',
       value: unpaidInvoices.toLocaleString()

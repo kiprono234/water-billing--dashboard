@@ -25,7 +25,7 @@ function App() {
   const [billings, setBillings] = useState([]);
   const [usageData, setUsageData] = useState([]);
 
-  // Load on mount
+  // Load persisted data on mount
   useEffect(() => {
     setUsers(getStoredUsers());
     setBillings(getStoredBillings());
@@ -47,6 +47,7 @@ function App() {
   const amountBilled = billings.reduce((acc, cur) => acc + cur.amount, 0);
   const customers = new Set(billings.map(b => b.name)).size;
 
+  // Multi-user login for meter reading only
   const handleLogin = ({ name }) => {
     let newUsers = users;
     if (!users.find(u => u.name === name)) {
@@ -58,14 +59,15 @@ function App() {
 
   const handleLogout = () => setUser(null);
 
-  const handleAddMeterReading = ({ month, reading, amount, payNow }) => {
-    const year = new Date().getFullYear();
-    const monthIndex = MONTHS.indexOf(month) + 1;
-    const formattedDate = `01/${monthIndex.toString().padStart(2, '0')}/${year}`;
+  const handleAddMeterReading = ({ month, reading, amount, payNow, date, year }) => {
+    // Accept date and year as parameters
+    const dateObj = date ? new Date(date) : new Date();
+    const formattedDate = dateObj.toLocaleDateString('en-GB'); // dd/mm/yyyy
     const newBilling = {
       name: user.name,
       date: formattedDate,
       month,
+      year: year || dateObj.getFullYear(),
       reading: parseFloat(reading),
       amount,
       status: payNow ? "Paid" : "Unpaid"

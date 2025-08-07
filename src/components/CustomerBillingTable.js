@@ -2,10 +2,10 @@ import React from 'react';
 import './CustomerBillingTable.scss';
 
 const billingRows = [
-  { name: "Lupita Mwangi", date: "10/04/2024", amount: 5600, status: "Paid" },
-  { name: "Samuel Odhiambo", date: "05/04/2024", amount: 7450, status: "Paid" },
-  { name: "Aisha Kiprop", date: "28/03/2024", amount: 3200, status: "Paid" },
-  { name: "Brian Otieno", date: "22/03/2024", amount: 6810, status: "Unpaid" },
+  { name: "", date: "10/04/2024", amount: 5600, status: "Paid" },
+  { name: "", date: "05/04/2024", amount: 7450, status: "Paid" },
+  { name: "", date: "28/03/2024", amount: 3200, status: "Paid" },
+  { name: "", date: "22/03/2024", amount: 6810, status: "Unpaid" },
 ];
 
 const formatAmount = (num) => `Ksh ${num.toLocaleString()}`;
@@ -16,8 +16,10 @@ const CustomerBillingTable = ({ rows = billingRows }) => (
     <table className="customer-billing-table">
       <thead>
         <tr>
-          <th>Customer Billing</th>
+          <th>Customer Name</th>
           <th>Billing Date</th>
+          <th>Month</th>
+          <th>Year</th>
           <th>Amount Billed</th>
           <th>Status</th>
         </tr>
@@ -27,6 +29,8 @@ const CustomerBillingTable = ({ rows = billingRows }) => (
           <tr key={idx}>
             <td>{row.name}</td>
             <td>{row.date}</td>
+            <td>{row.month || ''}</td>
+            <td>{row.year || ''}</td>
             <td>{formatAmount(row.amount)}</td>
             <td>
               <span className={`status-badge ${row.status === 'Paid' ? 'paid' : 'unpaid'}`}>

@@ -3,8 +3,8 @@ import './DashboardHeader.scss';
 
 const DashboardHeader = () => (
   <header className="dashboard-header">
-    <span className="dashboard-title">WATER BILLING SYSTEM</span>
-    <span className="dashboard-page">Dashboard</span>
+    <span className="dashboard-title">💧WATER💧 BILLING 💧SYSTEM💧</span>
+    <span className="dashboard-page"> 💧 Dashboard  💧💧💧💧</span>
   </header>
 );
 

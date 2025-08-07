@@ -1,5 +1,9 @@
 export const getStoredBillings = () => {
-    return JSON.parse(localStorage.getItem("billings") || "[]");
+    try {
+      return JSON.parse(localStorage.getItem("billings") || "[]");
+    } catch {
+      return [];
+    }
   };
   
   export const setStoredBillings = (billings) => {
@@ -7,7 +11,11 @@ export const getStoredBillings = () => {
   };
   
   export const getStoredUsageData = () => {
-    return JSON.parse(localStorage.getItem("usageData") || "[]");
+    try {
+      return JSON.parse(localStorage.getItem("usageData") || "[]");
+    } catch {
+      return [];
+    }
   };
   
   export const setStoredUsageData = (usageData) => {
@@ -15,7 +23,11 @@ export const getStoredBillings = () => {
   };
   
   export const getStoredUsers = () => {
-    return JSON.parse(localStorage.getItem("users") || "[]");
+    try {
+      return JSON.parse(localStorage.getItem("users") || "[]");
+    } catch {
+      return [];
+    }
   };
   
   export const setStoredUsers = (users) => {
