@@ -5,7 +5,7 @@ const navItems = [
   { key: 'dashboard', label: 'Dashboard', icon: <span className="icon">&#8962;</span> },
   { key: 'usage', label: 'Usage', icon: <span className="icon">&#128202;</span> },
   { key: 'customers', label: 'Customers', icon: <span className="icon">&#128101;</span> },
-  { key: '', label: 'Complaints', icon: <span className="icon">&#9881;</span> },
+  { key: '', label: 'Bill Complaints', icon: <span className="icon">&#9881;</span> },
 ];
 
 const Sidebar = ({ activeSection = 'dashboard', setActiveSection }) => {
