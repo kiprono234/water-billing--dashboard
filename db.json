@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "id": "e95f",
+      "name": "Eugine"
+    }
+  ],
+  "billings": [
+    {
+      "id": "1",
+      "name": "Alice",
+      "date": "08/08/2025",
+      "month": "August",
+      "year": 2025,
+      "reading": 120.5,
+      "amount": 241,
+      "status": "Paid"
+    },
+    {
+      "id": "2",
+      "name": "Bob",
+      "date": "08/08/2025",
+      "month": "August",
+      "year": 2025,
+      "reading": 80,
+      "amount": 160,
+      "status": "Unpaid"
+    },
+    {
+      "id": "ca19",
+      "name": "Eugine",
+      "date": "06/08/2025",
+      "month": "April",
+      "year": 2025,
+      "reading": 7,
+      "amount": 1050,
+      "status": "Paid"
+    }
+  ],
+  "usageData": [
+    {
+      "id": "1",
+      "month": "Aug",
+      "value": 200.5
+    },
+    {
+      "id": "9a69",
+      "month": "Apr",
+      "value": 7
+    }
+  ]
+}

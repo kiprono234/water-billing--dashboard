@@ -13,29 +13,25 @@ import {
 } from './utils/persistence';
 import './App.scss';
 
-const MONTHS = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December'
-];
-
-function App() {
+const App = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [billings, setBillings] = useState([]);
   const [usageData, setUsageData] = useState([]);
 
-  // Load persisted data on mount
+  // Load data from API
   useEffect(() => {
-    setUsers(getStoredUsers());
-    setBillings(getStoredBillings());
-    setUsageData(getStoredUsageData());
+    const fetchData = async () => {
+      const fetchedUsers = await getStoredUsers();
+      const fetchedBillings = await getStoredBillings();
+      const fetchedUsageData = await getStoredUsageData();
+      setUsers(fetchedUsers);
+      setBillings(fetchedBillings);
+      setUsageData(fetchedUsageData);
+    };
+    fetchData();
   }, []);
-
-  // Persist changes
-  useEffect(() => { setStoredUsers(users); }, [users]);
-  useEffect(() => { setStoredBillings(billings); }, [billings]);
-  useEffect(() => { setStoredUsageData(usageData); }, [usageData]);
 
   // Dashboard calculations
   const totalInvoices = billings.length;
@@ -47,22 +43,28 @@ function App() {
   const amountBilled = billings.reduce((acc, cur) => acc + cur.amount, 0);
   const customers = new Set(billings.map(b => b.name)).size;
 
-  // Multi-user login for meter reading only
-  const handleLogin = ({ name }) => {
-    let newUsers = users;
-    if (!users.find(u => u.name === name)) {
-      newUsers = [...users, { name }];
-      setUsers(newUsers);
+  // Handle login and persist if new
+  const handleLogin = async ({ name }) => {
+    const existingUser = users.find(u => u.name === name);
+    if (!existingUser) {
+      const newUser = { name };
+      await fetch('http://localhost:3001/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUser)
+      });
+      const updatedUsers = await getStoredUsers();
+      setUsers(updatedUsers);
     }
     setUser({ name });
   };
 
   const handleLogout = () => setUser(null);
 
-  const handleAddMeterReading = ({ month, reading, amount, payNow, date, year }) => {
-    // Accept date and year as parameters
+  const handleAddMeterReading = async ({ month, reading, amount, payNow, date, year }) => {
     const dateObj = date ? new Date(date) : new Date();
-    const formattedDate = dateObj.toLocaleDateString('en-GB'); // dd/mm/yyyy
+    const formattedDate = dateObj.toLocaleDateString('en-GB');
+
     const newBilling = {
       name: user.name,
       date: formattedDate,
@@ -72,23 +74,43 @@ function App() {
       amount,
       status: payNow ? "Paid" : "Unpaid"
     };
-    setBillings(prev => [...prev, newBilling]);
-    setUsageData(prev => {
-      const monthShort = month.slice(0, 3);
-      const found = prev.find(u => u.month === monthShort);
-      if (found) {
-        return prev.map(u =>
-          u.month === monthShort
-            ? { ...u, value: u.value + parseFloat(reading) }
-            : u
-        );
-      } else {
-        return [
-          ...prev,
-          { month: monthShort, value: parseFloat(reading) }
-        ];
-      }
+
+    // Save to API
+    await fetch('http://localhost:3001/billings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newBilling)
     });
+
+    const updatedBillings = await getStoredBillings();
+    setBillings(updatedBillings);
+
+    const monthShort = month.slice(0, 3);
+    const existingUsage = usageData.find(u => u.month === monthShort);
+    let updatedUsageData;
+
+    if (existingUsage) {
+      updatedUsageData = usageData.map(u =>
+        u.month === monthShort
+          ? { ...u, value: u.value + parseFloat(reading) }
+          : u
+      );
+      await fetch(`http://localhost:3001/usageData/${existingUsage.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ value: existingUsage.value + parseFloat(reading) })
+      });
+    } else {
+      const newUsage = { month: monthShort, value: parseFloat(reading) };
+      await fetch('http://localhost:3001/usageData', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUsage)
+      });
+      updatedUsageData = await getStoredUsageData();
+    }
+
+    setUsageData(updatedUsageData);
   };
 
   return (
@@ -118,6 +140,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

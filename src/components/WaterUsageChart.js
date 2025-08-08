@@ -13,7 +13,10 @@ const WaterUsageChart = ({ usageData }) => (
         margin={{ top: 12, right: 18, left: 0, bottom: 4 }}
       >
         <CartesianGrid stroke="#eee" />
-        <XAxis dataKey="month" />
+        <XAxis dataKey="month"  
+          tickLine={false}
+          axisLine={false}
+          />
         <YAxis />
         <Tooltip />
         <Line

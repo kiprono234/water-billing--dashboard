@@ -4,12 +4,13 @@ import './InvoiceStatusChart.scss';
 
 const COLORS = ['#3f8efc', '#f6a623'];
 
-const InvoiceStatusChart = ({ paidPercent = 78, unpaidPercent = 22 }) => {
+const InvoiceStatusChart = ({ paidPercent =0 , unpaidPercent =0  }) => {
   const data = [
     { name: 'Paid', value: paidPercent },
     { name: 'Unpaid', value: unpaidPercent },
   ];
-
+   
+  
   return (
     <div className="invoice-status-card">
       <div className="invoice-status-title">Invoice Status</div>
