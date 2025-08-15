@@ -3,6 +3,14 @@
     {
       "id": "e95f",
       "name": "Eugine"
+    },
+    {
+      "id": "c30f",
+      "name": "Alx"
+    },
+    {
+      "id": "43ad",
+      "name": "Chrome"
     }
   ],
   "billings": [
@@ -35,18 +43,53 @@
       "reading": 7,
       "amount": 1050,
       "status": "Paid"
+    },
+    {
+      "id": "a771",
+      "name": "Eugine",
+      "date": "04/02/2025",
+      "month": "January",
+      "year": 2025,
+      "reading": 8,
+      "amount": 1200,
+      "status": "Paid"
+    },
+    {
+      "id": "4e91",
+      "name": "Alx",
+      "date": "07/08/2025",
+      "month": "August",
+      "year": 2025,
+      "reading": 10,
+      "amount": 1500,
+      "status": "Paid"
+    },
+    {
+      "id": "63d7",
+      "name": "Chrome",
+      "date": "13/08/2025",
+      "month": "August",
+      "year": 2025,
+      "reading": 15,
+      "amount": 2250,
+      "status": "Unpaid"
     }
   ],
   "usageData": [
     {
       "id": "1",
       "month": "Aug",
-      "value": 200.5
+      "value": 225.5
     },
     {
       "id": "9a69",
       "month": "Apr",
       "value": 7
+    },
+    {
+      "id": "8e3c",
+      "month": "Jan",
+      "value": 8
     }
   ]
 }

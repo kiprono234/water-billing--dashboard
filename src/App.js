@@ -6,6 +6,9 @@ import WaterUsageChart from './components/WaterUsageChart';
 import InvoiceStatusChart from './components/InvoiceStatusChart';
 import CustomerBillingTable from './components/CustomerBillingTable';
 import MeterReadingCalculator from './components/MeterReadingCalculator';
+import BillComplaintModal from './components/BillComplaintModal';
+import UserDashboard from './components/UserDashboard';
+import AdminDashboard from './components/AdminDashboard';
 import {
   getStoredBillings, setStoredBillings,
   getStoredUsageData, setStoredUsageData,
@@ -19,6 +22,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [billings, setBillings] = useState([]);
   const [usageData, setUsageData] = useState([]);
+  const [showComplaintForm, setShowComplaintForm] = useState(false);
 
   // Load data from API
   useEffect(() => {
@@ -113,31 +117,87 @@ const App = () => {
     setUsageData(updatedUsageData);
   };
 
+  // Handle complaint submission
+  const handleComplaintSubmit = (form) => {
+    // In a real app, send this to a backend endpoint for admin processing
+    // E.g. fetch('/api/complaints', { method: "POST", body: JSON.stringify(form) })
+    console.log("Complaint submitted:", form);
+    // Add toast/notification if desired
+  };
+
+  // New: Render correct dashboard based on activeSection
+  const renderDashboard = () => {
+    if (activeSection === 'userDashboard') {
+      return (
+        <>
+          <DashboardHeader />
+          <SummaryCards
+            totalConsumption={totalConsumption}
+            amountBilled={amountBilled}
+            customers={customers}
+            unpaidInvoices={unpaidInvoices}
+          />
+          <div className="charts-row">
+            <WaterUsageChart usageData={usageData} />
+            <InvoiceStatusChart paidPercent={paidPercent} unpaidPercent={unpaidPercent} />
+          </div>
+          <div className="table-row">
+            <CustomerBillingTable rows={billings} />
+          </div>
+          <MeterReadingCalculator
+            onAddMeterReading={handleAddMeterReading}
+            user={user}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+          />
+        </>
+      );
+    } else if (activeSection === 'adminDashboard') {
+      return <AdminDashboard billings={billings} users={users} usageData={usageData} />;
+    } else {
+      // Default: userDashboard
+      return (
+        <>
+          <DashboardHeader />
+          <SummaryCards
+            totalConsumption={totalConsumption}
+            amountBilled={amountBilled}
+            customers={customers}
+            unpaidInvoices={unpaidInvoices}
+          />
+          <div className="charts-row">
+            <WaterUsageChart usageData={usageData} />
+            <InvoiceStatusChart paidPercent={paidPercent} unpaidPercent={unpaidPercent} />
+          </div>
+          <div className="table-row">
+            <CustomerBillingTable rows={billings} />
+          </div>
+          <MeterReadingCalculator
+            onAddMeterReading={handleAddMeterReading}
+            user={user}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+          />
+        </>
+      );
+    }
+  };
+
   return (
     <div style={{ display: 'flex' }}>
-      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+      <Sidebar
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        onOpenComplaint={() => setShowComplaintForm(true)}
+      />
       <div className="dashboard-container" style={{ marginLeft: 210 }}>
-        <DashboardHeader />
-        <SummaryCards
-          totalConsumption={totalConsumption}
-          amountBilled={amountBilled}
-          customers={customers}
-          unpaidInvoices={unpaidInvoices}
-        />
-        <div className="charts-row">
-          <WaterUsageChart usageData={usageData} />
-          <InvoiceStatusChart paidPercent={paidPercent} unpaidPercent={unpaidPercent} />
-        </div>
-        <div className="table-row">
-          <CustomerBillingTable rows={billings} />
-        </div>
-        <MeterReadingCalculator
-          onAddMeterReading={handleAddMeterReading}
-          user={user}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
-        />
+        {renderDashboard()}
       </div>
+      <BillComplaintModal
+        show={showComplaintForm}
+        onClose={() => setShowComplaintForm(false)}
+        onSubmit={handleComplaintSubmit}
+      />
     </div>
   );
 };
